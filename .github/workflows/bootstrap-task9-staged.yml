@@ -20,13 +20,14 @@ jobs:
         with:
           node-version: 20
           cache: npm
-      - name: Verify staged archive integrity
+      - name: Normalize and verify staged archive
         shell: bash
         run: |
-          test "$(wc -c < .bootstrap/task9.b64)" -eq 12588
-          test "$(sha256sum .bootstrap/task9.b64 | cut -d' ' -f1)" = "07efb583c5612aca9d3b7b57afa5dc59a798b6718d581586d16442b24e329588"
+          tr -d '\r\n' < .bootstrap/task9.b64 > /tmp/task9.b64
+          test "$(wc -c < /tmp/task9.b64)" -eq 12588
+          test "$(sha256sum /tmp/task9.b64 | cut -d' ' -f1)" = "07efb583c5612aca9d3b7b57afa5dc59a798b6718d581586d16442b24e329588"
       - name: Publish portable conformance suite
-        run: base64 -d .bootstrap/task9.b64 | tar -xzf -
+        run: base64 -d /tmp/task9.b64 | tar -xzf -
       - run: npm ci
       - run: npm run verify
       - name: Commit conformance suite and remove staging files
