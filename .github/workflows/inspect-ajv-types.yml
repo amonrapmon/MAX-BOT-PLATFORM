@@ -1,0 +1,31 @@
+name: inspect-ajv-types
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Expand Task 6 archive
+        shell: bash
+        run: |
+          archive=$(sed -n "s/.*printf '%s' '\([^']*\)'.*/\1/p" .github/workflows/bootstrap-task6.yml)
+          printf '%s' "$archive" | base64 -d | tar -xzf -
+      - run: npm install --no-audit --no-fund
+      - name: Collect declarations
+        run: |
+          mkdir declarations
+          cp node_modules/ajv/dist/2020.d.ts declarations/ajv-2020.d.ts
+          cp node_modules/ajv-formats/dist/index.d.ts declarations/ajv-formats.d.ts
+          cp node_modules/ajv/package.json declarations/ajv-package.json
+          cp node_modules/ajv-formats/package.json declarations/ajv-formats-package.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ajv-declarations
+          path: declarations
