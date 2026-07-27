@@ -11,9 +11,10 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "check:boundaries": "node scripts/check-contract-boundaries.mjs .",
-    "verify": "npm run typecheck && npm test && npm run check:boundaries && npm run check:standard && npm run check:schemas",
+    "verify": "npm run typecheck && npm test && npm run check:boundaries && npm run check:standard && npm run check:schemas && npm run check:redis-registry",
     "check:standard": "node scripts/validate-standard.mjs STANDARD.md",
-    "check:schemas": "vitest run testing/schemas/schema-validation.test.ts"
+    "check:schemas": "vitest run testing/schemas/schema-validation.test.ts",
+    "check:redis-registry": "node scripts/validate-redis-registry.mjs schemas/redis-keys.md"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
