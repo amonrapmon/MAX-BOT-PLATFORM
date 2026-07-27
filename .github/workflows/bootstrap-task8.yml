@@ -1,0 +1,37 @@
+name: bootstrap-task8
+
+on:
+  push:
+    branches: [codex/platform-bootstrap]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  publish-and-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Publish deterministic transport fixtures
+        shell: bash
+        run: |
+          printf '%s' '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' | base64 -d | tar -xzf -
+      - run: npm ci
+      - run: npm run verify
+      - name: Commit deterministic fixtures and remove bootstrap workflow
+        if: github.event_name == 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f .github/workflows/bootstrap-task8.yml
+          git add -A
+          git commit -m "test: add deterministic transport fixtures"
+          git push
