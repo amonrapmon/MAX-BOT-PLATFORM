@@ -1,0 +1,43 @@
+name: bootstrap-task11
+
+on:
+  push:
+    branches: [codex/platform-bootstrap]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  publish-and-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Assemble and verify Task 11 archive
+        shell: bash
+        run: |
+          cat .bootstrap/task11.part00 .bootstrap/task11.part01 .bootstrap/task11.part02 .bootstrap/task11.part03 | tr -d '\r\n' > /tmp/task11.b64
+          test "$(wc -c < /tmp/task11.b64)" -eq 9588
+          test "$(sha256sum /tmp/task11.b64 | cut -d' ' -f1)" = "7a1b0479b2ef34223adefe9288a65446636ebd964c4e4efbb84eecc94e8ef697"
+      - name: Publish operational layer
+        run: base64 -d /tmp/task11.b64 | tar -xzf -
+      - run: npm ci
+      - run: npm run verify
+      - run: docker compose -f docker-compose.test.yml config
+      - name: Commit operational layer and remove staging files
+        if: github.event_name == 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -rf .bootstrap
+          rm -f .github/workflows/bootstrap-task11.yml
+          git add -A
+          git commit -m "docs: add operational recovery runbooks"
+          git push
