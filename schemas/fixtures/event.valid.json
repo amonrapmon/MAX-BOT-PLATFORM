@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "eventId": "message:mid-1",
+  "type": "message",
+  "chatId": "chat-1",
+  "messageId": "mid-1",
+  "occurredAt": "2026-07-27T12:00:00.000Z"
+}

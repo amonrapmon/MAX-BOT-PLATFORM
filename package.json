@@ -11,12 +11,15 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "check:boundaries": "node scripts/check-contract-boundaries.mjs .",
+    "verify": "npm run typecheck && npm test && npm run check:boundaries && npm run check:standard && npm run check:schemas",
     "check:standard": "node scripts/validate-standard.mjs STANDARD.md",
-    "verify": "npm run typecheck && npm test && npm run check:boundaries && npm run check:standard"
+    "check:schemas": "vitest run testing/schemas/schema-validation.test.ts"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
     "typescript": "^5.8.3",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
   }
 }

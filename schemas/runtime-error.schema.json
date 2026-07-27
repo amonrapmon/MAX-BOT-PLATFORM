@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://max-bot-platform.dev/schemas/runtime-error.schema.json",
+  "title": "RuntimeErrorV1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "source", "kind", "code", "message"],
+  "properties": {
+    "version": { "const": 1 },
+    "source": {
+      "enum": ["max_api", "state_store", "polling", "inbound", "outbound", "configuration", "application"]
+    },
+    "kind": { "enum": ["retryable", "permanent", "ownership_lost", "shutdown"] },
+    "code": { "type": "string", "minLength": 1 },
+    "message": { "type": "string", "minLength": 1 },
+    "status": { "type": "integer" },
+    "retryAfterMs": { "type": "number", "minimum": 0 },
+    "causeName": { "type": "string", "minLength": 1 }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://max-bot-platform.dev/schemas/event-envelope.schema.json",
+  "title": "BotEventV1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "eventId", "type", "chatId", "occurredAt"],
+  "properties": {
+    "version": { "const": 1 },
+    "eventId": { "type": "string", "minLength": 1 },
+    "type": {
+      "enum": ["message", "callback", "bot_started", "bot_stopped", "dialog_removed"]
+    },
+    "chatId": { "type": "string", "minLength": 1 },
+    "userId": { "type": "string", "minLength": 1 },
+    "messageId": { "type": "string", "minLength": 1 },
+    "text": { "type": "string" },
+    "callbackData": { "type": "string" },
+    "occurredAt": { "type": "string", "format": "date-time" }
+  }
+}
