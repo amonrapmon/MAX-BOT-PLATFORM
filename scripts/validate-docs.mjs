@@ -25,6 +25,12 @@ const REQUIRED_DOCS = [
   "docs/adr/0002-redis-transport-state.md",
   "docs/adr/0003-inbound-idempotency.md",
   "docs/adr/0004-acceptance-not-delivery.md",
+  "docs/operations/local-development.md",
+  "docs/operations/deployment.md",
+  "docs/operations/transport-smoke.md",
+  "docs/operations/incident-recovery.md",
+  "testing/checklists/release.md",
+  "testing/checklists/MAX-CONFORMANCE.template.md",
 ];
 
 const ADR_SECTIONS = ["Status", "Context", "Decision", "Consequences", "Verification"];
