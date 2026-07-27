@@ -23,7 +23,7 @@ jobs:
       - name: Assemble and verify Task 10 archive
         shell: bash
         run: |
-          cat .bootstrap/task10.part00 .bootstrap/task10.part01 .bootstrap/task10.part02 .bootstrap/task10.part03 .bootstrap/task10.part04 | tr -d '\r\n' > /tmp/task10.b64
+          cat .bootstrap/task10.part00 .bootstrap/task10.part01 .bootstrap/task10.part02 .bootstrap/task10.part03a .bootstrap/task10.part03b .bootstrap/task10.part04 | tr -d '\r\n' > /tmp/task10.b64
           test "$(wc -c < /tmp/task10.b64)" -eq 13664
           test "$(sha256sum /tmp/task10.b64 | cut -d' ' -f1)" = "a737948be2b7553c679a85ec70d22585f1b5b2c3aa9869d40d2b4c712c28ef92"
       - name: Publish documentation layer
