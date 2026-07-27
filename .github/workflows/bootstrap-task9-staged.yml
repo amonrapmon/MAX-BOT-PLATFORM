@@ -20,10 +20,10 @@ jobs:
         with:
           node-version: 20
           cache: npm
-      - name: Normalize and verify staged archive
+      - name: Assemble and verify staged archive
         shell: bash
         run: |
-          tr -d '\r\n' < .bootstrap/task9.b64 > /tmp/task9.b64
+          cat .bootstrap/task9.part1 .bootstrap/task9.part2 .bootstrap/task9.part3 .bootstrap/task9.part4 .bootstrap/task9.part5 | tr -d '\r\n' > /tmp/task9.b64
           test "$(wc -c < /tmp/task9.b64)" -eq 12588
           test "$(sha256sum /tmp/task9.b64 | cut -d' ' -f1)" = "07efb583c5612aca9d3b7b57afa5dc59a798b6718d581586d16442b24e329588"
       - name: Publish portable conformance suite
