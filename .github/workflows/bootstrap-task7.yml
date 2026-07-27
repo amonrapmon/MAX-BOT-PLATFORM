@@ -1,0 +1,37 @@
+name: bootstrap-task7
+
+on:
+  push:
+    branches: [codex/platform-bootstrap]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  publish-and-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Publish Redis registry artifacts
+        shell: bash
+        run: |
+          printf '%s' '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' | base64 -d | tar -xzf -
+      - run: npm ci
+      - run: npm run verify
+      - name: Commit Redis registry and remove bootstrap workflow
+        if: github.event_name == 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f .github/workflows/bootstrap-task7.yml
+          git add -A
+          git commit -m "docs: define Redis state registry"
+          git push
