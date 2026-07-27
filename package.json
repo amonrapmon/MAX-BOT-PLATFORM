@@ -11,7 +11,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "check:boundaries": "node scripts/check-contract-boundaries.mjs .",
-    "verify": "npm run typecheck && npm test && npm run check:boundaries"
+    "check:standard": "node scripts/validate-standard.mjs STANDARD.md",
+    "verify": "npm run typecheck && npm test && npm run check:boundaries && npm run check:standard"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
