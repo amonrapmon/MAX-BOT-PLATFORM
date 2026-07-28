@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://max-bot-platform.dev/schemas/health-snapshot.schema.json",
+  "title": "RuntimeHealthV1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "status", "polling", "stateStore", "outbound", "updatedAt"],
+  "properties": {
+    "version": { "const": 1 },
+    "status": {
+      "enum": ["starting", "healthy", "degraded", "recovering", "unhealthy", "stopping", "stopped"]
+    },
+    "polling": { "$ref": "#/$defs/componentHealth" },
+    "stateStore": { "$ref": "#/$defs/componentHealth" },
+    "outbound": { "$ref": "#/$defs/componentHealth" },
+    "updatedAt": { "type": "string", "format": "date-time" }
+  },
+  "$defs": {
+    "componentHealth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "consecutiveFailures"],
+      "properties": {
+        "status": { "enum": ["up", "degraded", "down"] },
+        "lastSuccessAt": { "type": "string", "format": "date-time" },
+        "lastFailureAt": { "type": "string", "format": "date-time" },
+        "consecutiveFailures": { "type": "integer", "minimum": 0 },
+        "errorCode": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

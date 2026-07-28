@@ -1,0 +1,27 @@
+{
+  "name": "max-bot-platform",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check:boundaries": "node scripts/check-contract-boundaries.mjs .",
+    "verify": "npm run typecheck && npm test && npm run check:boundaries && npm run check:standard && npm run check:schemas && npm run check:redis-registry && npm run check:docs",
+    "check:standard": "node scripts/validate-standard.mjs STANDARD.md",
+    "check:schemas": "vitest run testing/schemas/schema-validation.test.ts",
+    "check:redis-registry": "node scripts/validate-redis-registry.mjs schemas/redis-keys.md",
+    "check:docs": "node scripts/validate-docs.mjs ."
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  }
+}

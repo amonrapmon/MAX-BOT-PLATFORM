@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "source": "max_api",
+  "kind": "retryable",
+  "code": "http_500",
+  "message": "temporary transport failure",
+  "status": 500
+}

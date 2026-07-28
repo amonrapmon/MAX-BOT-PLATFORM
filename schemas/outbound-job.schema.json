@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://max-bot-platform.dev/schemas/outbound-job.schema.json",
+  "title": "OutboundJobV1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "jobId",
+    "idempotencyKey",
+    "chatId",
+    "payload",
+    "priority",
+    "attempt",
+    "maxAttempts",
+    "createdAt",
+    "availableAt"
+  ],
+  "properties": {
+    "version": { "const": 1 },
+    "jobId": { "type": "string", "minLength": 1 },
+    "idempotencyKey": { "type": "string", "minLength": 1 },
+    "chatId": { "type": "string", "minLength": 1 },
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["idempotencyKey", "chatId"],
+      "properties": {
+        "idempotencyKey": { "type": "string", "minLength": 1 },
+        "chatId": { "type": "string", "minLength": 1 },
+        "text": { "type": "string" },
+        "format": { "enum": ["plain", "markdown"] },
+        "attachments": { "type": "array", "items": {} },
+        "priority": { "type": "number" },
+        "correlationId": { "type": "string", "minLength": 1 }
+      }
+    },
+    "priority": { "type": "integer" },
+    "attempt": { "type": "integer", "minimum": 0 },
+    "maxAttempts": { "type": "integer", "minimum": 1 },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "availableAt": { "type": "string", "format": "date-time" },
+    "lease": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ownerId", "leasedUntil"],
+      "properties": {
+        "ownerId": { "type": "string", "minLength": 1 },
+        "leasedUntil": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}

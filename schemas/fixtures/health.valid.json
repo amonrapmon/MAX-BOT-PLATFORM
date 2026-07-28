@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "status": "healthy",
+  "polling": { "status": "up", "consecutiveFailures": 0 },
+  "stateStore": { "status": "up", "consecutiveFailures": 0 },
+  "outbound": { "status": "up", "consecutiveFailures": 0 },
+  "updatedAt": "2026-07-27T12:00:00.000Z"
+}
